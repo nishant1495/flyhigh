@@ -11,6 +11,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name="flights")
 public class Flight 
@@ -18,29 +20,34 @@ public class Flight
 	private Integer flightId;
 	private String sourceCity;
 	private String destinationCity;
+	@DateTimeFormat(pattern = "HH:mm")
 	private Date  departureTime;
+	@DateTimeFormat(pattern = "HH:mm")
 	private Date arrivalTime;
 	private Integer capacity;
 	private Integer seatsAvailable;
 	private Integer version;
-	
+	private Byte isActive=1;
 	private Airline airline;
 	
 	public Flight() {
 	System.out.println("In Flight pojo");
 	}
+	
 	public Flight(String sourceCity, String destinationCity, Date departureTime, Date arrivalTime, Integer capacity,
-			Integer seatsAvailable,Airline airline) {
-		super();
+			Integer seatsAvailable, Integer version, Byte isActive, Airline airline) 
+	{
 		this.sourceCity = sourceCity;
 		this.destinationCity = destinationCity;
 		this.departureTime = departureTime;
 		this.arrivalTime = arrivalTime;
 		this.capacity = capacity;
 		this.seatsAvailable = seatsAvailable;
+		this.version = version;
+		this.isActive = isActive;
 		this.airline = airline;
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getFlightId() {
@@ -102,6 +109,14 @@ public class Flight
 	}
 	public void setAirline(Airline airline) {
 		this.airline = airline;
+	}
+	
+	
+	public Byte getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(Byte isActive) {
+		this.isActive = isActive;
 	}
 	
 	@Override
