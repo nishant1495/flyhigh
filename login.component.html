@@ -1,0 +1,46 @@
+
+<nav class="navbar navbar-inverse">
+      <a class="navbar-brand" routerLink="login">FlyHigh</a>
+      <ul class="nav navbar-nav navbar-right">
+          <li *ngIf="!isLogin">
+              <a routerLink="login"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+          </li>
+          
+          <li *ngIf="isLogin">
+              <a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
+          </li>
+          
+  
+          <li>
+              <a routerLink="/register"><span class="glyphicon glyphicon-user"></span>Register</a>
+          </li>
+      </ul>
+  </nav>
+
+<div class="signup-form">
+  <form #myLoginForm="ngForm" (ngSubmit)="login(myLoginForm)" role="form" ngNativeValidate>
+  <h2>Log in</h2>
+  <p class="hint-text">Please enter your Email and Password.</p>
+  <div class="form-group">
+        <input type="email" ngModel class="form-control" name="email" placeholder="Email" required="required">
+  </div>
+      
+  <div class="form-group">
+          <input type="password" ngModel class="form-control" name="password" placeholder="Password" required="required">
+  </div>
+
+  <div class="form-group">
+          <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+  </div>
+  <div class="form-group">
+        New User?<a routerLink="/register">Register Here</a>         
+  </div>
+
+  <div class="form-group">
+      <a routerLink="/forget">Forgot Password</a>         
+</div>
+
+
+  </form>
+
+</div>
