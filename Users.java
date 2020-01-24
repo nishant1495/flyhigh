@@ -1,8 +1,12 @@
 package com.app.pojos;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="users")
@@ -15,11 +19,16 @@ public class Users
 	private String phoneno;
 	private Role role=Role.PASSENGER;
 	private Byte status=0;
+	@JsonBackReference
+	private List<Reservation> resrvationdetails;
 	
 	public Users() {
 	System.out.println("Inside users pojo");
 	}
-	public Users(String name, String email, String password, String phoneno, Role role, Byte status) {
+	
+	
+	public Users(String name, String email, String password, String phoneno, Role role, Byte status,
+			List<Reservation> resrvationdetails) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -27,7 +36,10 @@ public class Users
 		this.phoneno = phoneno;
 		this.role = role;
 		this.status = status;
+		this.resrvationdetails = resrvationdetails;
 	}
+
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getId() {
@@ -85,6 +97,26 @@ public class Users
 	public void setStatus(Byte status) {
 		this.status = status;
 	}
+
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL,orphanRemoval=true,fetch=FetchType.EAGER)
+	public List<Reservation> getResrvationdetails() {
+		return resrvationdetails;
+	}
+
+	public void setResrvationdetails(List<Reservation> resrvationdetails) {
+		this.resrvationdetails = resrvationdetails;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Users [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", phoneno="
+				+ phoneno + ", role=" + role + ", status=" + status + "]";
+	}
+
+
+	
+	
 	
 	
 	
